@@ -1,0 +1,20 @@
+---
+- hosts: all
+  roles:
+  - common
+ 
+- hosts: webuser
+  roles:
+  - webuser
+
+- hosts: mysql
+  roles:
+  - mysql
+
+- hosts: wordpress
+  roles:
+  - wordpress
+
+- hosts: haproxy
+  roles:
+  - haproxy

@@ -1,0 +1,22 @@
+---
+# tasks file for mysql
+- name: install required software
+  package: name={{ item }} state=present
+  with_items:
+    - epel-release
+    - mariadb
+    - mariadb-server
+    - MySQL-python
+
+- name: start mariadb
+  service: name=mariadb.service state=started
+
+- name: create mysql database
+  mysql_db: name={{ wp_mysql_db }} state=present
+  become: yes
+
+- name: create mysql user
+  mysql_user: name={{ wp_mysql_user }} password={{ wp_mysql_password }} priv=*.*:ALL
+  become: yes
+- name: stop firewalld
+  service: name=firewalld state=stopped

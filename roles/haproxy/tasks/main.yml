@@ -1,0 +1,29 @@
+---
+# tasks file for haproxy
+- name: install haproxy
+  package: name=haproxy state=present
+
+- name: uncominting line in rsyslog
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - {'regexp': "#$ModLoad 1mudp", 'line': "ModeLoad 1mudp"}
+    - {'regexp': "#$UDPServerrun 514", 'line': "$UDPServerRun 514"}
+
+- name: resrating rayslog
+  service: name=rsyslog state=restarted
+
+#- name: configure haproxy
+ # template: src=haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+
+- name: start haproxy
+  service: name=haproxy state=started enabled=yes
+
+#- name: adding haproxy port
+ # firewalld:
+  #  port: 514/tcp
+   # permenent: true
+    #state: enabled
+

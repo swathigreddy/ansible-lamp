@@ -1,0 +1,11 @@
+---
+# tasks file for webuser
+- name: install software
+  package: name={{ item }} state=present
+  with_items:
+    - httpd
+    - php
+    - php-mysql
+
+
+
